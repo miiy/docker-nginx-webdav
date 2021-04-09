@@ -1,8 +1,8 @@
-## build
+## Build
 
 docker build -t webdav .
 
-## https
+## Https
 
 ```bash
 openssl genrsa -out cert.key 4096
@@ -18,14 +18,15 @@ openssl x509 -req  -days 3650 \
 -out cert.crt
 ```
 
-## http basic auth
+## Http basic auth
 
 ```bash
 htpasswd -bc ./config/nginx/htpasswd admin 123456
 ```
 
-## run
+## Run
 
+```bash
 docker run --rm --name webdav -d \
     -p 80:80 -p 443:443 \
     -v  $(pwd)/config/nginx/certs:/usr/local/nginx/conf/certs:ro \
@@ -33,3 +34,4 @@ docker run --rm --name webdav -d \
     -v  $(pwd)/config/nginx/htpasswd:/usr/local/nginx/conf/htpasswd:ro \
     -v  $(pwd)/www:/data/www/ \
     webdav:latest
+```
