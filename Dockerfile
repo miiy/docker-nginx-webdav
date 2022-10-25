@@ -1,4 +1,4 @@
-FROM debian:buster-slim
+FROM debian:bookworm
 
 RUN cat /etc/apt/sources.list \
     && sed -i "s/deb.debian.org/mirrors.aliyun.com/g" /etc/apt/sources.list \
@@ -19,14 +19,14 @@ RUN apt-get update && apt-get install -y \
     apache2-utils
 
 RUN cd /usr/local/src/ \
-    && curl -LO https://nginx.org/download/nginx-1.18.0.tar.gz \
-    && curl -L https://github.com.cnpmjs.org/arut/nginx-dav-ext-module/archive/refs/tags/v3.0.0.tar.gz -o nginx-dav-ext-module-3.0.0.tar.gz \
-    && tar -zxvf nginx-1.18.0.tar.gz \
+    && curl -LO https://nginx.org/download/nginx-1.22.1.tar.gz \
+    && curl -L https://github.com/arut/nginx-dav-ext-module/archive/refs/tags/v3.0.0.tar.gz -o nginx-dav-ext-module-3.0.0.tar.gz \
+    && tar -zxvf nginx-1.22.1.tar.gz \
     && tar -zxvf nginx-dav-ext-module-3.0.0.tar.gz
 
 RUN groupadd nginx \
-    && useradd nginx -g nginx -s /sbin/nolgoin -M \
-    && cd /usr/local/src/nginx-1.18.0 \
+    && useradd nginx -g nginx -s /usr/sbin/nolgoin -M \
+    && cd /usr/local/src/nginx-1.22.1\
     && ./configure \
     --prefix=/usr/local/nginx \
     --sbin-path=/usr/local/nginx/sbin/nginx \
